@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/* 특정 n번째 자식을 지정하는 선택자 */
+/* ul 태그의 자식 중 첫번째 li태그 선택. */
+ul > li:first-child{
+	font-size: 22px;
+	font-style: italic;
+	font-weight: bold;
+}
+/* ul 태그의 자식 중 마지막 li태그 선택. */
+ul > li:last-child {
+	color: silver;
+}
+ul > li:nth-child(3) {
+	border: 1px solid red;
+}
+#secondUL > li:nth-child(even) {
+	font-size: 10px;
+}
+
+</style>
+</head>
+<body>
+<ul>
+	<li>item1</li>
+	<li>item2</li>
+	<li>item3</li>
+	<li>item4</li>
+	<li>item5</li>
+	<li>item6</li>
+</ul>
+
+<ul id="secondUL">
+	<li>item1</li>
+	<li>item2</li>
+	<li>item3</li>
+	<li>item4</li>
+	<li>item5</li>
+	<li>item6</li>
+</ul>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+/* 자식 선택자 */
+/* id속성이 div1인 태그으이 자식 div를 선택 */
+#div1 > div{
+	background-color: lime;
+}
+/* 자손 선택자 */
+/* class가 div2인 태그의 자손 div 태그를 선택. */
+.div2 div{
+	background-color: orange;
+}
+</style>
+</head>
+<body>
+<div>
+	<div id="div1">
+		<div>1</div>
+		<div>2</div>
+	</div>
+	<div class="div2">
+		<div>
+			3
+			<div>3-1</div>
+			<div>3-2</div>
+		</div>
+		<div>4</div>
+		<div>5</div>
+	</div>
+</div>
+</body>
+</html>
