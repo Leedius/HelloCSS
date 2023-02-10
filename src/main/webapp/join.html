@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+.container{
+	margin: 0 auto; /* 상하여백 좌우여백 */
+}
+table{
+	margin: 0 auto;
+	border: 2px solid;
+	border-collapse: collapse;
+}
+tr > td:nth-child(1) {
+	text-align: center;
+}
+tr, td{
+	border: 2px solid;
+}
+.redFont{
+	color: red;
+	font-size: 12px;
+	font-style: italic;
+}
+textarea{
+	resize: none;
+}
+
+</style>
+</head>
+<body>
+<div class="container">
+	<table>
+		<colgroup>
+			<col width="25%">
+			<col width="*">
+		</colgroup>
+		<tr>
+			<td colspan="2" style="background-color: #cee3f6; font-weight: bold;">
+				<span class="redFont">(*필수입력)</span>
+				회원기본정보			
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<span class="redFont">*</span>아이디:
+			</td>
+			<td>
+				<input type="text" placeholder="4~12자의 영문 대소문자, 수자만 입력"; style="width: 220px">
+				<input type="button" value="아이디 검사">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<span class="redFont">*</span>비밀번호:
+			</td>
+			<td>
+				<input type="password">
+				4~12자의 영문 대소문자와 숫자로만 입력
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<span class="redFont">*</span>비밀번호확인:
+			</td>
+			<td>
+				<input type="password">
+				<input type="button" value="비밀번호 확인">
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<span class="redFont">*</span>메일주소:
+			</td>
+			<td>
+				<input type="text" style="width: 200px">
+				<input type="button" value="메일 확인">
+				예)id@domain.com
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<span class="redFont">*</span>이름:
+			</td>
+			<td>
+				<input type="text" style="width: 200px">
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" style="background-color: #cee3f6; font-weight: bold;">
+				개인 신상 정보
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<span class="redFont">*</span>주민등록번호:
+			</td>
+			<td>
+				<input type="text" style="width: 80px">
+				-
+				<input type="text" style="width: 80px">
+				<input type="button" value="확인">
+				예)123456-1234567
+			</td>
+		</tr>
+		<tr>
+			<td>
+				생일:
+			</td>
+			<td>
+				<div>
+					<input type="text" style="width: 80px">년
+					<input type="text" style="width: 50px">월
+					<input type="text" style="width: 50px">일
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				주소:
+			</td>
+			<td>
+				<div>
+					<input type="text" id="postcode" size="5" readonly>
+					<input type="button" value="우편번호 찾기" onclick="checkPost()">
+				</div>
+				<div>
+					<input type="text" id="address" size="23" placeholder="주소" readonly>
+					<input type="text" id="detailAddress" size="23" placeholder="상세주소">
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				관심분야:
+			</td>
+			<td>
+				<div>
+					<input type="checkbox">컴퓨터 
+					<input type="checkbox">인터넷 
+					<input type="checkbox">여행 
+					<input type="checkbox">영화감삼 
+					<input type="checkbox">음악감상
+				</div> 
+			</td>
+		</tr>
+		<tr>
+			<td>
+				자기소개:
+			</td>
+			<td>
+				<textarea rows="5" cols="55"></textarea>
+			</td>
+		</tr>
+	</table>
+</div>
+<div>
+	<input type="button" value="뒤로가기" onclick="location.href='login.html'" style="margin: auto">
+</div>
+</body>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script>
+    function checkPost() {
+    	console.log("우편번호")
+        new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var addr = ''; // 주소 변수
+                var extraAddr = ''; // 참고항목 변수
+
+                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+                    addr = data.roadAddress;
+                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+                    addr = data.jibunAddress;
+                }
+
+                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+                if(data.userSelectedType === 'R'){
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                        extraAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if(data.buildingName !== '' && data.apartment === 'Y'){
+                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                    }
+                }
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postcode').value = data.zonecode;
+                document.getElementById("address").value = addr;
+                // 커서를 상세주소 필드로 이동한다.
+                document.getElementById("detailAddress").focus();
+            }
+        }).open();
+    }
+    function passwordcheck() {
+        let password = $("#password").val()
+
+        let id = $("#id").text()
+        let jsonData = { // Body에 첨부할 json 데이터
+            "id":id,
+            "password":password,
+            "result":1
+        };
+        $.ajax({
+            type: "POST",
+            url: '/post/detail/password',
+            contentType: "application/json",
+            data: JSON.stringify(jsonData),
+            success: function (response) {
+                if(response["result"] == 1){
+                    $("#changediv").show();
+                }else{
+                    alert("비밀번호가 틀립니다.")
+                }
+            }
+        })
+    }
+</script>
+</html>
